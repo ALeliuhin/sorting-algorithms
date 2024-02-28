@@ -89,13 +89,23 @@ def bubble_sort(array):
                     array[j], array[j + 1] = array[j + 1], array[j]
         return array
 
+
 def built_in_timsort(array):
     array.sort()
     return array
 
+
 def main():
 
-    dict_of_methods = {"Quicksort": 0, "Merge Sort": 0, "Selection Sort": 0, "Insertion Sort": 0, "Bubble Sort": 0, "Timsort": 0}
+    dict_of_methods = {
+        "Quicksort": quicksort,
+        "Merge Sort": merge_sort,
+        "Selection Sort": selection_sort,
+        "Insertion Sort": insertion_sort,
+        "Bubble Sort": bubble_sort,
+        "Timsort": built_in_timsort
+    }
+
 
     number_of_elements = int(input("\n_______________________ \nInput a non-negative value as the number \nof elements in the generated array: "))
     if number_of_elements < 0:
@@ -107,7 +117,8 @@ def main():
         print("\nThe limit for the values must be POSITIVE. \n_______________________ \nPlease TRY AGAIN")
         exit(1)
 
-    def generating_Array(num_of_elements, int_limits):
+
+    def generateArray(num_of_elements, int_limits):
         array_to_return = []
         if num_of_elements == 1:
             array_to_return.append(random.randint(-int_limits, int_limits))
@@ -118,50 +129,22 @@ def main():
         return array_to_return
 
 
-    def measure_Time():
-        generated_array = generating_Array(number_of_elements, integer_limits)
+    def measureTime():
+        generated_array = generateArray(number_of_elements, integer_limits)
 
-        for method in dict_of_methods:
+        dict_of_times = {}
 
-            if method == "Quicksort":
-                start_time = time.time()
-                quicksort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
-                
-            elif method == "Merge Sort":
-                start_time = time.time()
-                merge_sort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
+        for method, sort_func in dict_of_methods.items():
+            start_time = time.time()
+            sort_func(generated_array)
+            end_time = time.time()
+            dict_of_times[method] = end_time - start_time
 
-            elif method == "Selection Sort":
-                start_time = time.time()
-                selection_sort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
+        return dict_of_times
 
-            elif method == "Insertion Sort":
-                start_time = time.time()
-                insertion_sort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
-
-            elif method == "Bubble Sort":
-                start_time = time.time()
-                bubble_sort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
-
-            elif method == "Timsort":
-                start_time = time.time()
-                built_in_timsort(generated_array)
-                end_time = time.time()
-                dict_of_methods[method] = end_time - start_time
-    measure_Time()
 
     def createCSV():
-        sorted_list = sorted(dict_of_methods.items(), key=lambda x: x[1])
+        sorted_list = sorted(measureTime().items(), key=lambda x: x[1])
         header = ["Method", "Execution Time"]
         items_for_file = []
         for i in sorted_list:

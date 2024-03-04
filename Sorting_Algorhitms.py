@@ -1,6 +1,7 @@
 import random
 import time
 import csv
+import copy
 
 def quicksort(array):
     if len(array) <= 1:
@@ -128,15 +129,14 @@ def main():
 
         return array_to_return
 
-
     def measureTime():
         generated_array = generateArray(number_of_elements, integer_limits)
-
         dict_of_times = {}
 
         for method, sort_func in dict_of_methods.items():
+            aux_array = copy.deepcopy(generated_array)
             start_time = time.time()
-            sort_func(generated_array)
+            sort_func(aux_array)
             end_time = time.time()
             dict_of_times[method] = end_time - start_time
 
@@ -159,3 +159,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

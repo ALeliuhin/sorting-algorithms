@@ -11,4 +11,3 @@ module "random"
 
 module "csv"
 
-module "copy"

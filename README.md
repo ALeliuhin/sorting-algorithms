@@ -1,6 +1,6 @@
 # sorting-algorithms
 ------------------------
-REQUIREMENTS:
+REQUIREMENTS
 ------------------------
 
 Python v.3.12.0
@@ -12,7 +12,7 @@ module "random"
 module "csv"
 
 ------------------------
-Documentation
+DOCUMENTATION
 ------------------------
 1. The program comprises two classes: "class Array" and "class ArraySorter"
 2. The class "Array" allows to create an instance, utilizing properties based on user-input data.
